@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('photo');
             $table->string('description');
             $table->unsignedBigInteger('author_id');
+            $table->integer('price');
             $table->foreign(['author_id'], 'fk_author_album')->references(['id'])->on('authors')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->timestamps();
         });

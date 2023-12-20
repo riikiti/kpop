@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AlbumRequest;
+use App\Models\Author;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -21,55 +22,68 @@ class AlbumCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
     {
         CRUD::setModel(\App\Models\Album::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/album');
-        CRUD::setEntityNameStrings('album', 'albums');
+        CRUD::setEntityNameStrings('Альбом', 'Альбомы');
     }
 
-    /**
-     * Define what happens when the List operation is loaded.
-     * 
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
-
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        $this->crud->column('id');
+        $this->crud->column('name')->label('Название');
+        $this->crud->addColumn([
+            'name' => 'photo',
+            'label' => 'Превью',
+            'type' => 'image',
+            'prefix' => '/storage/',
+        ]);
+        $this->crud->column('price')->label('Стоимость');
+        $this->crud->column('description')->label('Описание');
+        $this->crud->addColumn([
+            'label' => 'Автор',
+            'name' => 'author',
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->author()->pluck('name')[0];
+            }
+        ]);
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
     protected function setupCreateOperation()
     {
         CRUD::setValidation(AlbumRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
-
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        $this->crud->field('name')->label('Название');
+        $this->crud->field('description')->label('Описание');
+        $this->crud->addField([
+            'name' => 'photo',
+            'label' => 'Логотип',
+            'type' => 'upload',
+            'withFiles' => true
+        ]);
+        $this->crud->field('price')->label('Стоимость');
+        $this->crud->addField([
+            'label'     => "Автор",
+            'type'      => 'select',
+            'name'      => 'author_id',
+            'entity'    => 'author',
+            'model'     => Author::class,
+            'attribute' => 'name',
+            'options'   => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
+        ]);
     }
 
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
+    }
+
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
