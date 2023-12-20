@@ -129,9 +129,19 @@
 <main class="main">
 
 
-    <h2 class="title title--2">Курсы</h2>
+    <h2 class="title title--2">Группы</h2>
+    <div class="groups">
+        @foreach(App\Models\Group::all() as $item)
 
+            <div class="groups__card">
+                <div class="groups__card-img">
+                    <img src="http://127.0.0.1:8000/storage/{{$item->avatar}}" alt="{{$item->avatar}}">
+                </div>
+                <h2 class="title title--2">{{$item->name}}</h2>
 
+            </div>
+        @endforeach
+    </div>
 
 </main>
 </body>

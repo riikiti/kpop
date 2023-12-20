@@ -25,7 +25,7 @@ class GroupRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+             'name' => 'required|min:2|max:255'
         ];
     }
 
@@ -49,7 +49,9 @@ class GroupRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            '*.required' => 'Поле обязательно для ввода',
+            'name.min' => 'Поле имя должно быть больше 2 символов',
+            'name.max' => 'Поле имя должно быть меньше 255 символов',
         ];
     }
 }

@@ -25,7 +25,9 @@ class AuthorRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => 'required|min:2|max:255',
+            'avatar' => 'required|file|mimes:jpeg,jpg,png,webp',
+            'group_id'=>'required'
         ];
     }
 
@@ -49,7 +51,11 @@ class AuthorRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            '*.required' => 'Поле обязательно для ввода',
+            'name.min' => 'Поле имя должно быть больше 2 символов',
+            'name.max' => 'Поле имя должно быть меньше 255 символов',
+            '*.file' => 'Загрузите файл',
+            '*.mimes'=>'Неподходящий формат файлов',
         ];
     }
 }

@@ -41,16 +41,29 @@ class GroupCrudController extends CrudController
     {
         $this->crud->column('id');
         $this->crud->column('name')->label('Название');
+        $this->crud->addColumn([
+            'name' => 'avatar',
+            'label' => 'Аватар',
+            'type' => 'image',
+            'prefix' => '/storage/',
+        ]);
     }
 
-    protected function  setupShowOperation(){
+    protected function setupShowOperation()
+    {
         $this->setupListOperation();
     }
 
     protected function setupCreateOperation()
     {
         CRUD::setValidation(GroupRequest::class);
-         $this->crud->field('name')->label('Название');
+        $this->crud->field('name')->label('Название');
+        $this->crud->addField([
+            'name' => 'avatar',
+            'label' => 'Аватар',
+            'type' => 'upload',
+            'withFiles' => true
+        ]);
     }
 
     protected function setupUpdateOperation()

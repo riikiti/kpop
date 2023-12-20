@@ -13,5 +13,6 @@ class Group extends Model
 
     protected $fillable = [
         'name',
+        'avatar'
     ];
 }
