@@ -29,7 +29,7 @@ class AlbumRequest extends FormRequest
             'photo' => 'required|file|mimes:jpeg,jpg,png,webp',
             'price' => 'required|integer',
             'description' => 'required',
-            'author_id'=>'required'
+            'group_id'=>'required'
         ];
     }
 

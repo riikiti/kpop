@@ -17,11 +17,16 @@ class Album extends Model
         'photo',
         'description',
         'price',
-        'author_id'
+        'group_id',
+        'new'
     ];
 
-    public function author(): BelongsTo
+    public function group(): BelongsTo
     {
-        return $this->belongsTo(Author::class);
+        return $this->belongsTo(Group::class);
+    }
+
+    public function getNewStatusStatus() {
+        return $this->new ? 'Новинка' : 'Уже в продаже';
     }
 }

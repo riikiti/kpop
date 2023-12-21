@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('photo');
             $table->string('description');
-            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('group_id');
             $table->integer('price');
-            $table->foreign(['author_id'], 'fk_author_album')->references(['id'])->on('authors')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->boolean('new')->default(false);
+            $table->foreign(['group_id'], 'fk_group_album')->references(['id'])->on('groups')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

@@ -14,20 +14,10 @@
 </head>
 <body>
 <header class="header">
-
-
     <a href="/">
         <x-application-logo class="w-20 h-20 fill-current text-gray-500"/>
     </a>
 
-    <nav class="navigation">
-        <ul>
-            <li class="title title--4"><a href="{{ url('/contacts') }}">Контакты</a></li>
-
-            <li class="title title--4"><a href="tel:+79208534927">+79208534927</a></li>
-            <li class="title title--4"><a href="#">Telegram</a></li>
-        </ul>
-    </nav>
     @if (Route::has('login'))
         <div>
             @auth
@@ -127,20 +117,68 @@
 </header>
 
 <main class="main">
-
-
     <h2 class="title title--2">Группы</h2>
     <div class="groups">
         @foreach(App\Models\Group::all() as $item)
-
-            <div class="groups__card">
+            <a href="#" class="groups__card">
                 <div class="groups__card-img">
                     <img src="http://127.0.0.1:8000/storage/{{$item->avatar}}" alt="{{$item->avatar}}">
                 </div>
                 <h2 class="title title--2">{{$item->name}}</h2>
+            </a>
+        @endforeach
+    </div>
 
+    <h2 class="title title--2">Новинки</h2>
+
+    <div class="albums">
+
+        @foreach(App\Models\Album::take(10)->where('new',true)->get() as $album)
+            <div class="albums__card">
+                @if($album->new)
+                    <div class="albums__card-new">
+                        <span>Новинка!</span>
+                    </div>
+                @endif
+                <a href="#" class="albums__card-img">
+                    <img src="http://127.0.0.1:8000/storage/{{$album->photo}}" alt="{{$album->photo}}">
+                </a>
+                <div class="albums__card-info">
+                    <a href="#" class="title title--3">{{$album->name}}</a>
+                    <p>{{$album->price}} руб.</p>
+                    @auth
+                        <form method="post">
+                            @csrf
+                            <input type="hidden" name="album_id" value="{{ $album->id }}">
+                            <div class="albums__card-submit">
+                                <button type="submit">Заказать</button>
+                            </div>
+                        </form>
+                    @endauth
+                </div>
             </div>
         @endforeach
+    </div>
+
+    <div class="info-block">
+        <img src="{{ asset('../img/IMG_3513.webp') }}" alt="footer">
+        <div class="info-block__info">
+            <h2 class="title title--2">
+                Наш магазин в Санкт-Петербурге
+            </h2>
+            <span>М: Площадь Восстания/Лиговский проспект</span>
+            <div class="info-block__info-address"><strong>Адрес:</strong>
+                <div>Лиговский проспект 50 литера З<br>Каждый день с 12:00 до 20:00</div>
+            </div>
+            <div class="info-block__info-address"><strong>Как найти:</strong>
+                <div>Желтое здание, второй вход после кафе</div>
+            </div>
+            <div class="info-block__info-link">
+                <a href="https://yandex.ru/maps/org/stars_store/99018684263/?ll=30.337000%2C59.922835&amp;z=15"
+                   target="_blank" class="link ">Посмотреть на карте
+                </a>
+            </div>
+        </div>
     </div>
 
 </main>

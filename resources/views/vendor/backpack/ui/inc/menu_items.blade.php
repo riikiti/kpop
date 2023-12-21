@@ -3,11 +3,6 @@
 
 <x-backpack::menu-item title="Администраторы"  :link="backpack_url('admin')" />
 <x-backpack::menu-item title="Пользователи"  :link="backpack_url('user')" />
-
-<x-backpack::menu-item title="Курсы"  :link="backpack_url('course')" />
-<x-backpack::menu-item title="Пользователи и курсы"  :link="backpack_url('course-user')" />
+<x-backpack::menu-item title="Альбомы пользователей" :link="backpack_url('album-user')" />
 <x-backpack::menu-item title="Группы" :link="backpack_url('group')" />
-<x-backpack::menu-item title="Учителя"  :link="backpack_url('teacher')" />
-<x-backpack::menu-item title="Курсы и группы"  :link="backpack_url('course-group')" />
-<x-backpack::menu-item title="Курсы и учителя" :link="backpack_url('course-teacher')" />
-<x-backpack::menu-item title="Логи"  :link="backpack_url('logs')" />
+<x-backpack::menu-item title="Альбомы"  :link="backpack_url('album')" />

@@ -9,7 +9,7 @@
                     <h3>{{ $user->email }}</h3>
                     <img src="http://127.0.0.1:8000/storage/avatars/{{$user->avatar}}" alt="{{$user->avatar}}">
                     <h2 class="title title--2">
-                        Ваши курсы
+                        Купленные альбомы
                     </h2>
 
                     @foreach(App\Models\AlbumUser::where('user_id', auth()->id())->get() as $item)

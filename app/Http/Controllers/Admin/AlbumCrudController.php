@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AlbumRequest;
-use App\Models\Author;
+use App\Models\Group;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -46,12 +46,21 @@ class AlbumCrudController extends CrudController
         $this->crud->column('description')->label('Описание');
         $this->crud->addColumn([
             'label' => 'Автор',
-            'name' => 'author',
+            'name' => 'group',
             'type' => 'closure',
             'function' => function ($entry) {
-                return $entry->author()->pluck('name')[0];
+                return $entry->group()->pluck('name')[0];
             }
         ]);
+        $this->crud->addColumn([
+            'name' => 'new',
+            'label' => 'Новинка',
+            'type' => 'closure',
+            'function' => function ($entry) {
+                return $entry->getNewStatusStatus();
+            }
+        ]);
+
     }
 
     protected function setupCreateOperation()
@@ -69,14 +78,15 @@ class AlbumCrudController extends CrudController
         $this->crud->addField([
             'label'     => "Автор",
             'type'      => 'select',
-            'name'      => 'author_id',
-            'entity'    => 'author',
-            'model'     => Author::class,
+            'name'      => 'group_id',
+            'entity'    => 'group',
+            'model'     => Group::class,
             'attribute' => 'name',
             'options'   => (function ($query) {
                 return $query->orderBy('name', 'ASC')->get();
             }),
         ]);
+        $this->crud->field('new')->label('Новинка');
     }
 
     protected function setupShowOperation()

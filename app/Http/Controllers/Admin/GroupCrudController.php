@@ -47,6 +47,8 @@ class GroupCrudController extends CrudController
             'type' => 'image',
             'prefix' => '/storage/',
         ]);
+        $this->crud->column('status')->label('Тип группы');
+
     }
 
     protected function setupShowOperation()
@@ -63,6 +65,16 @@ class GroupCrudController extends CrudController
             'label' => 'Аватар',
             'type' => 'upload',
             'withFiles' => true
+        ]);
+        $this->crud->field([
+            'name' => 'status',
+            'label' => 'Направление',
+            'type' => 'enum',
+            'options' => [
+                'Женская группа' => 'Женская группа',
+                'Мужская группа' => 'Мужская группа',
+                'Соло исполнитель' => 'Соло исполнитель',
+            ]
         ]);
     }
 

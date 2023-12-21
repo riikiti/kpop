@@ -8,14 +8,6 @@
             <x-application-logo class="w-20 h-20 fill-current text-gray-500"/>
         </a>
 
-        <!-- Navigation Links -->
-        <nav class="navigation">
-            <ul>
-                <li class="title title--4"><a href="{{ url('/contacts') }}">Контакты</a></li>
-                <li class="title title--4"><a href="tel:+79208534927">+79208534927</a></li>
-                <li class="title title--4"><a href="#">Telegram</a></li>
-            </ul>
-        </nav>
         <!-- Settings Dropdown -->
         <div class="hidden sm:flex sm:items-center sm:ms-6">
             <x-dropdown align="right" width="48">
