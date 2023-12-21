@@ -117,23 +117,37 @@
 </header>
 
 <main class="main">
-    <h2 class="title title--2">Группы</h2>
-    <div class="groups">
-        @foreach(App\Models\Group::all() as $item)
-            <a href="{{ route('group.show', ['id' => $item->id]) }}" class="groups__card">
-                <div class="groups__card-img">
-                    <img src="http://127.0.0.1:8000/storage/{{$item->avatar}}" alt="{{$item->avatar}}">
-                </div>
-                <h2 class="title title--2">{{$item->name}}</h2>
-            </a>
-        @endforeach
-    </div>
 
-    <h2 class="title title--2">Новинки</h2>
+    <div class="album-page">
+        <div class="album-page__img">
+            <img src="http://127.0.0.1:8000/storage/{{$album->photo}}" alt="{{$album->photo}}">
+        </div>
+        <div class="album-page__info">
+            <div class="album-page__header"><h2 class="title title--2">Альбом {{$album->name}}</h2> @if($album->new)
+                    <div class="album-page__header-new">
+                        <span>Новинка!</span>
+                    </div>
+                @endif</div>
+            <div class="album-page__description">
+                <h3 class="title title--3">Описание:</h3>
+                <p>{{$album->description}}</p>
+            </div>
+            <p class="album-page__price">{{$album->price}} руб.</p>
+            @auth
+                <form method="post" action="{{ route('albumUser.store') }}">
+                    @csrf
+                    <input type="hidden" name="album_id" value="{{ $album->id }}">
+                    <div class="albums__card-submit ">
+                        <button  class="custom-btn btn-3" type="submit"><span>Заказать</span></button>
+                    </div>
+                </form>
+            @endauth
+        </div>
+    </div>
+    <h2 class="title title--2">Так же может быть интересно</h2>
 
     <div class="albums">
-
-        @foreach(App\Models\Album::take(10)->where('new',true)->get() as $album)
+        @foreach(App\Models\Album::take(5)->where('group_id','=',$album->group_id)->where('id','!=',$album->id)->get() as $album)
             <div class="albums__card">
                 @if($album->new)
                     <div class="albums__card-new">
@@ -144,14 +158,15 @@
                     <img src="http://127.0.0.1:8000/storage/{{$album->photo}}" alt="{{$album->photo}}">
                 </a>
                 <div class="albums__card-info">
-                    <a href="{{ route('album.show', ['id' => $album->id]) }}" class="title title--3">{{$album->name}}</a>
+                    <a href="{{ route('album.show', ['id' => $album->id]) }}"
+                       class="title title--3">{{$album->name}}</a>
                     <p>{{$album->price}} руб.</p>
                     @auth
-                        <form method="post"  action="{{ route('albumUser.store') }}">
+                        <form method="post" action="{{ route('albumUser.store') }}">
                             @csrf
                             <input type="hidden" name="album_id" value="{{ $album->id }}">
-                            <div class="albums__card-submit ">
-                                <button  class="custom-btn btn-3" type="submit"><span>Заказать</span></button>
+                            <div class="albums__card-submit">
+                                <button type="submit">Заказать</button>
                             </div>
                         </form>
                     @endauth
@@ -160,26 +175,6 @@
         @endforeach
     </div>
 
-    <div class="info-block">
-        <img src="{{ asset('../img/IMG_3513.webp') }}" alt="footer">
-        <div class="info-block__info">
-            <h2 class="title title--2">
-                Наш магазин в Санкт-Петербурге
-            </h2>
-            <span>М: Площадь Восстания/Лиговский проспект</span>
-            <div class="info-block__info-address"><strong>Адрес:</strong>
-                <div>Лиговский проспект 50 литера З<br>Каждый день с 12:00 до 20:00</div>
-            </div>
-            <div class="info-block__info-address"><strong>Как найти:</strong>
-                <div>Желтое здание, второй вход после кафе</div>
-            </div>
-            <div class="info-block__info-link">
-                <a href="https://yandex.ru/maps/org/stars_store/99018684263/?ll=30.337000%2C59.922835&amp;z=15"
-                   target="_blank" class="link ">Посмотреть на карте
-                </a>
-            </div>
-        </div>
-    </div>
 
 </main>
 </body>

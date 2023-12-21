@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AlbumUserController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +28,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/albumUser/store',  [AlbumUserController::class, 'store'])->name('albumUser.store');
+Route::get('/group/{id}', [GroupController::class, 'show'])->name('group.show');
+Route::get('/album/{id}', [AlbumController::class, 'show'])->name('album.show');
 require __DIR__.'/auth.php';

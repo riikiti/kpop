@@ -117,23 +117,15 @@
 </header>
 
 <main class="main">
-    <h2 class="title title--2">Группы</h2>
-    <div class="groups">
-        @foreach(App\Models\Group::all() as $item)
-            <a href="{{ route('group.show', ['id' => $item->id]) }}" class="groups__card">
-                <div class="groups__card-img">
-                    <img src="http://127.0.0.1:8000/storage/{{$item->avatar}}" alt="{{$item->avatar}}">
-                </div>
-                <h2 class="title title--2">{{$item->name}}</h2>
-            </a>
-        @endforeach
-    </div>
-
-    <h2 class="title title--2">Новинки</h2>
-
+    <div>Тип исполнителя: {{$group->status}} / Название: {{$group->name}}</div>
+    <h2 class="title title--2">Альбомы группы {{$group->name}}</h2>
+    @if(empty( App\Models\Album::where('group_id',$group->id)->get()[0]))
+        <h3 class="title title--3"> Альбомов группы {{$group->name}} не найдено.</h3>
+    @endif
     <div class="albums">
 
-        @foreach(App\Models\Album::take(10)->where('new',true)->get() as $album)
+        @foreach(App\Models\Album::take(10)->where('group_id',$group->id)->get() as $album)
+
             <div class="albums__card">
                 @if($album->new)
                     <div class="albums__card-new">
@@ -160,26 +152,7 @@
         @endforeach
     </div>
 
-    <div class="info-block">
-        <img src="{{ asset('../img/IMG_3513.webp') }}" alt="footer">
-        <div class="info-block__info">
-            <h2 class="title title--2">
-                Наш магазин в Санкт-Петербурге
-            </h2>
-            <span>М: Площадь Восстания/Лиговский проспект</span>
-            <div class="info-block__info-address"><strong>Адрес:</strong>
-                <div>Лиговский проспект 50 литера З<br>Каждый день с 12:00 до 20:00</div>
-            </div>
-            <div class="info-block__info-address"><strong>Как найти:</strong>
-                <div>Желтое здание, второй вход после кафе</div>
-            </div>
-            <div class="info-block__info-link">
-                <a href="https://yandex.ru/maps/org/stars_store/99018684263/?ll=30.337000%2C59.922835&amp;z=15"
-                   target="_blank" class="link ">Посмотреть на карте
-                </a>
-            </div>
-        </div>
-    </div>
+
 
 </main>
 </body>
