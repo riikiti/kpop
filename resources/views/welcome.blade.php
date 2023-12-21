@@ -147,7 +147,7 @@
                     <a href="#" class="title title--3">{{$album->name}}</a>
                     <p>{{$album->price}} руб.</p>
                     @auth
-                        <form method="post">
+                        <form method="post"  action="{{ route('albumUser.store') }}">
                             @csrf
                             <input type="hidden" name="album_id" value="{{ $album->id }}">
                             <div class="albums__card-submit">
