@@ -122,9 +122,10 @@
     @if(empty( App\Models\Album::where('group_id',$group->id)->get()[0]))
         <h3 class="title title--3"> Альбомов группы {{$group->name}} не найдено.</h3>
     @endif
+
     <div class="albums">
 
-        @foreach(App\Models\Album::take(10)->where('group_id',$group->id)->get() as $album)
+        @foreach($albums as $album)
 
             <div class="albums__card">
                 @if($album->new)
@@ -136,23 +137,25 @@
                     <img src="http://127.0.0.1:8000/storage/{{$album->photo}}" alt="{{$album->photo}}">
                 </a>
                 <div class="albums__card-info">
-                    <a href="{{ route('album.show', ['id' => $album->id]) }}" class="title title--3">{{$album->name}}</a>
+                    <a href="{{ route('album.show', ['id' => $album->id]) }}"
+                       class="title title--3">{{$album->name}}</a>
                     <p>{{$album->price}} руб.</p>
                     @auth
-                        <form method="post"  action="{{ route('albumUser.store') }}">
+                        <form method="post" action="{{ route('albumUser.store') }}">
                             @csrf
                             <input type="hidden" name="album_id" value="{{ $album->id }}">
                             <div class="albums__card-submit ">
-                                <button  class="custom-btn btn-3" type="submit"><span>Заказать</span></button>
+                                <button class="custom-btn btn-3" type="submit"><span>Заказать</span></button>
                             </div>
                         </form>
                     @endauth
                 </div>
             </div>
         @endforeach
+
     </div>
 
-
+    {{ $albums->links() }}
 
 </main>
 </body>

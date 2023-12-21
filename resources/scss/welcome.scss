@@ -297,9 +297,14 @@
         align-items: flex-end;
         padding: 30px;
         gap: 50px;
-        h2{
+        @include vp-1279(){
             width: 100%;
+        }
+        h2{
             text-align: right;
+            @include vp-1279(){
+                text-align: left;
+            }
         }
     }
 
