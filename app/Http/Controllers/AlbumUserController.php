@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\AlbumUser;
+use App\Models\Logs;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,10 +24,14 @@ class AlbumUserController extends Controller
                 'user_id' => auth()->id(),
                 'album_id' => $validatedData['album_id'],
             ]);
+            $album = Album::query()->where('id', $validatedData['album_id'])->first();
+            Logs::create([
+                'content' => 'Пользователь оставил запрос на покупку альбома '. $album->name,
+                'user_id' => auth()->id()
+            ]);
         } else {
             return view('profile.edit', ['user' => auth()->user()]);
         }
-
         return view('profile.edit', ['user' => auth()->user()]);
     }
 }

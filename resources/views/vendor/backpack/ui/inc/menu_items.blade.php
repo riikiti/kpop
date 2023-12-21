@@ -6,3 +6,4 @@
 <x-backpack::menu-item title="Альбомы пользователей" :link="backpack_url('album-user')" />
 <x-backpack::menu-item title="Группы" :link="backpack_url('group')" />
 <x-backpack::menu-item title="Альбомы"  :link="backpack_url('album')" />
+<x-backpack::menu-item title="Логи"  :link="backpack_url('logs')" />
