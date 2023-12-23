@@ -118,16 +118,41 @@
 
 <main class="main">
     <h2 class="title title--2">Группы</h2>
-    <div class="groups">
-        @foreach(App\Models\Group::all() as $item)
-            <a href="{{ route('group.show', ['id' => $item->id]) }}" class="groups__card">
-                <div class="groups__card-img">
-                    <img src="http://127.0.0.1:8000/storage/{{$item->avatar}}" alt="{{$item->avatar}}">
-                </div>
-                <h2 class="title title--2">{{$item->name}}</h2>
-            </a>
-        @endforeach
-    </div>
+    <form action="{{ route('group.filter') }}" method="GET">
+
+        @csrf
+        <select name="status">
+            <option value="Женская группа" @if(!empty($select) && $select == 'Женская группа') selected @endif>Женская группа</option>
+            <option value="Мужская группа" @if(!empty($select) && $select == 'Мужская группа') selected @endif>Мужская группа</option>
+            <option value="Соло исполнитель" @if(!empty($select) && $select == 'Соло исполнитель') selected @endif>Соло исполнитель</option>
+            <option value="Все" @if(!empty($select) && $select == 'Все') selected @endif>Все</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    @if( empty($group) )
+        <div class="groups">
+            @foreach(App\Models\Group::all() as $item)
+                <a href="{{ route('group.show', ['id' => $item->id]) }}" class="groups__card">
+                    <div class="groups__card-img">
+                        <img src="http://127.0.0.1:8000/storage/{{$item->avatar}}" alt="{{$item->avatar}}">
+                    </div>
+                    <h2 class="title title--2">{{$item->name}}</h2>
+                </a>
+            @endforeach
+        </div>
+    @else
+        <div class="groups">
+            @foreach($group as $res)
+                <a href="{{ route('group.show', ['id' => $res->id]) }}" class="groups__card">
+                    <div class="groups__card-img">
+                        <img src="http://127.0.0.1:8000/storage/{{$res->avatar}}" alt="{{$res->avatar}}">
+                    </div>
+                    <h2 class="title title--2">{{$res->name}}</h2>
+                </a>
+            @endforeach
+        </div>
+    @endif
 
     <h2 class="title title--2">Новинки</h2>
 
@@ -144,14 +169,15 @@
                     <img src="http://127.0.0.1:8000/storage/{{$album->photo}}" alt="{{$album->photo}}">
                 </a>
                 <div class="albums__card-info">
-                    <a href="{{ route('album.show', ['id' => $album->id]) }}" class="title title--3">{{$album->name}}</a>
+                    <a href="{{ route('album.show', ['id' => $album->id]) }}"
+                       class="title title--3">{{$album->name}}</a>
                     <p>{{$album->price}} руб.</p>
                     @auth
-                        <form method="post"  action="{{ route('albumUser.store') }}">
+                        <form method="post" action="{{ route('albumUser.store') }}">
                             @csrf
                             <input type="hidden" name="album_id" value="{{ $album->id }}">
                             <div class="albums__card-submit ">
-                                <button  class="custom-btn btn-3" type="submit"><span>Заказать</span></button>
+                                <button class="custom-btn btn-3" type="submit"><span>Заказать</span></button>
                             </div>
                         </form>
                     @endauth

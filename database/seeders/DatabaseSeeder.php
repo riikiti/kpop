@@ -20,34 +20,41 @@ class DatabaseSeeder extends Seeder
         Admin::factory(1)->create();
         Group::query()->firstOrCreate([
             'name' =>  GroupEnum::Bts,
+            'status'=> 'Мужская группа'
         ]);
         Group::query()->firstOrCreate([
             'name' =>  GroupEnum::StrayKids,
+            'status'=> 'Мужская группа'
         ]);
 
         Group::query()->firstOrCreate([
             'name' =>  GroupEnum::Enhypen,
+            'status'=> 'Мужская группа'
         ]);
 
         Group::query()->firstOrCreate([
             'name' =>  GroupEnum::TXT,
+            'status'=> 'Мужская группа'
         ]);
 
         Group::query()->firstOrCreate([
             'name' =>  GroupEnum::Blackpink,
+            'status'=> 'Женская группа'
         ]);
 
         Group::query()->firstOrCreate([
-            'name' =>  GroupEnum::Ateez
+            'name' =>  GroupEnum::Ateez,
+            'status'=> 'Соло исполнитель'
         ]);
 
         Group::query()->firstOrCreate([
             'name' =>  GroupEnum::Itzy,
+            'status'=> 'Женская группа'
         ]);
 
         Group::query()->firstOrCreate([
-
             'name' =>  GroupEnum::Twice,
+            'status'=> 'Женская группа'
         ]);
     }
 }
