@@ -441,18 +441,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        border: 1px solid $black;
+        border: 1px solid $white;
         border-radius: $border-radius;
         gap: 15px;
         font-weight: bold;
-        color: $black;
+        color: $white;
     }
 
     &__header {
         width: 100%;
         padding-bottom: 10px;
-        border-bottom: 1px solid $black;
-        color: $black;
+        border-bottom: 1px solid $white;
+        color: $white;
     }
 
     &__body {
