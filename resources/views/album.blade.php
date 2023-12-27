@@ -144,6 +144,36 @@
             @endauth
         </div>
     </div>
+
+    <h2 class="title title--2">Комментарии</h2>
+    <div class="comment">
+        @if(empty(\App\Models\Comment::query()->where('album_id', $album->id )->get()[0]))
+            <h3 class="title title--3" style="text-align: center"> Комментариев нет</h3>
+        @endif
+
+        @foreach( \App\Models\Comment::query()->where('album_id', $album->id )->get() as $comment)
+            <div class="comment__item">
+                <div class="comment__header">
+                    {{$comment->user->name}}
+                </div>
+                <div class="comment__body">
+                    {{$comment->body}}</div>
+            </div>
+        @endforeach
+    </div>
+    @auth
+        <form method="post" action="{{ route('albumUser.addComment') }}">
+            @csrf
+            <input type="hidden" name="album_id" value="{{ $album->id}}">
+            <input type="hidden" name="user_id" value="{{ auth()->user()->getAuthIdentifier()}}">
+            <textarea name="body"></textarea>
+            <div class="album-card__submit">
+                <button type="submit" class="custom-btn btn-16">Отправить</button>
+            </div>
+        </form>
+    @endauth
+
+
     <h2 class="title title--2">Так же может быть интересно</h2>
 
     <div class="albums">

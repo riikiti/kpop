@@ -427,3 +427,43 @@
     width: 100%;
 }
 
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+
+    &__item {
+        padding: 20px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid $black;
+        border-radius: $border-radius;
+        gap: 15px;
+        font-weight: bold;
+        color: $black;
+    }
+
+    &__header {
+        width: 100%;
+        padding-bottom: 10px;
+        border-bottom: 1px solid $black;
+        color: $black;
+    }
+
+    &__body {
+
+    }
+}
+
+
+textarea {
+    width: 800px;
+    @include vp-1024() {
+        width: 300px;
+    }
+}

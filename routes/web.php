@@ -31,4 +31,5 @@ Route::post('/albumUser/store',  [AlbumUserController::class, 'store'])->name('a
 Route::get('/group/{id}', [GroupController::class, 'show'])->name('group.show');
 Route::get('/group', [GroupController::class, 'filter'])->name('group.filter');
 Route::get('/album/{id}', [AlbumController::class, 'show'])->name('album.show');
+Route::post('/albumUser/addComment',  [AlbumController::class, 'addComment'])->name('albumUser.addComment');
 require __DIR__.'/auth.php';

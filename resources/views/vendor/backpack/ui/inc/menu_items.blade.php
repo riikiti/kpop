@@ -7,3 +7,4 @@
 <x-backpack::menu-item title="Группы" :link="backpack_url('group')" />
 <x-backpack::menu-item title="Альбомы"  :link="backpack_url('album')" />
 <x-backpack::menu-item title="Логи"  :link="backpack_url('logs')" />
+<x-backpack::menu-item title="Комментарии"  :link="backpack_url('comments')" />
